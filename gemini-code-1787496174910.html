@@ -5,37 +5,72 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Watch Video</title>
   <style>
-    body { margin: 0; background-color: #0d0d0d; color: #fff; font-family: sans-serif; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; }
-    .player-box { width: 90%; max-width: 900px; aspect-ratio: 16/9; background: #000; box-shadow: 0 10px 30px rgba(0,0,0,0.8); border-radius: 8px; overflow: hidden; }
-    iframe { width: 100%; height: 100%; border: none; }
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #0d0d0d;
+      color: #ffffff;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+    }
+    .player-container {
+      width: 90%;
+      max-width: 960px;
+      aspect-ratio: 16 / 9;
+      background: #000000;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8);
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid #222;
+    }
+    iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+    .error-msg {
+      text-align: center;
+      padding: 40px;
+      color: #ff5555;
+      font-size: 1.2rem;
+    }
   </style>
 </head>
 <body>
-  <div class="player-box">
-    <iframe id="videoPlayer" src="" allowfullscreen></iframe>
+
+  <div class="player-container" id="playerBox">
+    <iframe id="videoPlayer" src="" allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
   </div>
 
   <script>
-    // 1. Map your custom link IDs to YouTube IDs
+    // Map your custom shareable IDs to YouTube Video IDs
     const videoDatabase = {
-      "15257806244421708159": "dQw4w9WgXcQ", // replace "dQw4w9WgXcQ" with your YouTube ID
-      "sample-video-2": "another_youtube_id"
+      "15257806244421708159": "rWw0jblJBgw",
+      "1786884837735089": "rWw0jblJBgw",
+      "my-first-video": "rWw0jblJBgw"
     };
 
-    // 2. Read ID from URL query: yoursite.vercel.app/?id=15257806244421708159
+    // Extract the 'id' parameter from the site URL: ?id=YOUR_ID
     const urlParams = new URLSearchParams(window.location.search);
     const videoId = urlParams.get('id');
 
     const player = document.getElementById('videoPlayer');
+    const container = document.getElementById('playerBox');
 
     if (videoId && videoDatabase[videoId]) {
       const ytId = videoDatabase[videoId];
       player.src = `https://www.youtube-nocookie.com/embed/${ytId}?rel=0&autoplay=1`;
     } else {
-      document.body.innerHTML = "<h2>Video Not Found or Invalid Link</h2>";
+      container.innerHTML = '<div class="error-msg"><h2>Video Not Found</h2><p>Invalid or missing video link parameter.</p></div>';
     }
   </script>
+
 </body>
 </html>
-videoDatabase:
-"rWw0jblJBgw": "NEW_YOUTUBE_ID"
